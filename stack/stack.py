@@ -56,17 +56,19 @@ class Stack:
         if self.head is None:
             self.head = new_item
         else:
-            while self.head.get_next():
-                self.head = self.head.get_next()
-            self.head.set_next(new_item)
+            old_head = self.head
+            self.head = new_item
+            new_item.next = old_head
         
 
     def pop(self):
         current = self.head
         if current != None:
             self.size -= 1
+            rt = self.head.data
+            current = None
             self.head = current.get_next()
-            return self.head.data
+            return rt
         else:
             return None
 

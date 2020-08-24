@@ -37,10 +37,44 @@ class LinkedList:
             return current_head.value
     
     def remove_tail(self):
-        current = self.head
-        if current != None:
-            self.length -= 1
-            self.head = current.get_next()
-            return self.head.data
-        else:
+        if self.tail is None:
             return None
+        if self.head == self.tail:
+            current_tail = self.tail
+            self.tail = None
+            self.head = None
+            self.length = self.length -1
+            return current_tail.value
+        else:
+            current_node = self.head
+            while current_node.next != self.tail:
+                current_node = current_node.next
+            current_tail = self.tail
+            self.tail = current_node
+            current_node.next = None
+            self.length = self.length -1
+            return current_tail.value
+
+    def add_to_head(self, value):
+        if self.head is None:
+            new_node = Node(value, None)
+            self.head = new_node
+            self.tail = new_node
+            self.length += 1
+        else:
+            new_node = Node(value, self.head)
+            self.head = new_node
+            self.length += 1
+
+
+    def remove_at_index(self, index):
+        if index >= self.length:
+            return None
+        prev_Node = self.head
+        for i in range(index -1):
+            prev_Node = prev_Node.next
+        target = prev_Node.next
+        prev_Node.next = target.next
+        target.next = None
+        self.length = self.length - 1
+        return target.value
